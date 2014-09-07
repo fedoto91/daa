@@ -1,5 +1,5 @@
 # Eugene Fedotov
-# Brute Force program for the Traveling Sales Person problem.
+# Brute Force program for the Traveling Sales Person problem
 
 import re, itertools, math
 
@@ -8,8 +8,6 @@ coordList = []      # will store the coordinates of all the cities
 n = 0       # will be the number of cities
 
 def BruteForce(g):
-    xTotal = None
-    yTotal = None
     with open(g) as file:
         for i, line in enumerate(file):
             if i == 3:
@@ -17,7 +15,7 @@ def BruteForce(g):
                 n = int(n[0])    # n is the number of cities in g
                 for j in range(1, n+1):
                     cityList.append(j)      # create permuations of [1 .. n]
-            if i >= 6 and i < (6 + n):
+            if i >= 6 and i <= (6 + n):
                 coordList.append(re.findall(r'\d+', line))
 
                 
@@ -31,12 +29,13 @@ def BruteForce(g):
 
     bestTourSoFar = p # bestTourSoFar is the tour corresponding to p
     bestTourSoFarList = list(bestTourSoFar)
-    xTotal = int(coordList[bestTourSoFarList[n - 1] - 1][1])
-    yTotal = int(coordList[bestTourSoFarList[n - 1] - 1][2])
-    for i in range(n - 2, -1, -1):     # loop as many times as there are cities
-        xTotal -= int(coordList[bestTourSoFarList[i]][1])
-        yTotal -= int(coordList[bestTourSoFarList[i]][2])
-    bestCostSoFar = math.hypot(xTotal, yTotal) # bestCostSoFar is the cost of bestTourSoFar
+    bestCostSoFar = 0
+    for i in range(0, n - 1):
+        x2 = int(coordList[bestTourSoFarList[i]][1])
+        y2 = int(coordList[bestTourSoFarList[i]][2])
+        x1 = int(coordList[bestTourSoFarList[i] - 1][1])
+        y1 = int(coordList[bestTourSoFarList[i] - 1][2])
+        bestCostSoFar += math.hypot(x2 - x1, y2 - y1)       # bestCostSoFar is the cost of bestTourSoFar
     print(bestCostSoFar)
     
 
