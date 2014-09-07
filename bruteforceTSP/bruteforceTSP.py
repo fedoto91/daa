@@ -1,7 +1,7 @@
 # Eugene Fedotov
 # Brute Force program for the Traveling Sales Person problem
 
-import re, itertools, math
+import re, itertools, math, cProfile
 
 cityList = []       # will store permutations of [1 .. n]
 coordList = []      # will store the coordinates of all the cities
@@ -37,24 +37,29 @@ def BruteForce(g):
     # Print total cost for first permutation.
     # print(bestCostSoFar)
 
-    while permGen:    # while (permGen has more permutations)
-        for q in permGen:   # p is the next permutation of permGen
-            if q == p:
-                pass
-            else:
-                t = list(q) # t is the tour corresponding to p
-                tCost = 0
-                for i in range(0, n - 1):
-                    x2 = int(coordList[t[i]][1])
-                    y2 = int(coordList[t[i]][2])
-                    x1 = int(coordList[t[i] - 1][1])
-                    y1 = int(coordList[t[i] - 1][2])
-                    tCost += math.hypot(x2 - x1, y2 - y1)       # bestCostSoFar is the cost of bestTourSoFar
-
+# while (permGen has more permutations)
+    for q in permGen:   # p is the next permutation of permGen
+        if q == p:
+            pass    # skip first permutation
+        else:
+            t = list(q) # t is the tour corresponding to p
+            tCost = 0
+            for i in range(0, n - 1):
+                x2 = int(coordList[t[i]][1])
+                y2 = int(coordList[t[i]][2])
+                x1 = int(coordList[t[i] - 1][1])
+                y1 = int(coordList[t[i] - 1][2])
+                tCost += math.hypot(x2 - x1, y2 - y1)       # bestCostSoFar is the cost of bestTourSoFar
                 if (tCost > bestCostSoFar):
                     bestTourSoFar = t
                     bestCostSoFar = tCost
-    return bestTourSofar
+                    print("Best tour:  ")
+                    print(bestTourSoFar)
+                    print("\n")
+                    print("Best cost:  ")
+                    print(bestCostSoFar)
+                    print("\n")
+    return bestTourSoFar
 
 g = "mini1.tsp"     # graph g
-print(BruteForce(g))
+cProfile.run('BruteForce(g)')
