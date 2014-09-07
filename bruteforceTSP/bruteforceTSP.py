@@ -1,3 +1,6 @@
+# Eugene Fedotov
+# Brute Force program for the Traveling Sales Person problem.
+
 import re, itertools, math
 
 cityList = []       # will store permutations of [1 .. n]
@@ -5,8 +8,8 @@ coordList = []      # will store the coordinates of all the cities
 n = 0       # will be the number of cities
 
 def BruteForce(g):
-    xTotal = 0
-    yTotal = 0
+    xTotal = None
+    yTotal = None
     with open(g) as file:
         for i, line in enumerate(file):
             if i == 3:
@@ -28,13 +31,14 @@ def BruteForce(g):
 
     bestTourSoFar = p # bestTourSoFar is the tour corresponding to p
     bestTourSoFarList = list(bestTourSoFar)
-    for i in range(0, n):     # loop as many times as there are cities
-        xTotal -= int(coordList[bestTourSoFarList[0] - 1][1])
-        yTotal -= int(coordList[bestTourSoFarList[0] - 1][2])
-    xTotal = abs(xTotal)
-    yTotal = abs(yTotal)
+    xTotal = int(coordList[bestTourSoFarList[n - 1] - 1][1])
+    yTotal = int(coordList[bestTourSoFarList[n - 1] - 1][2])
+    for i in range(n - 2, -1, -1):     # loop as many times as there are cities
+        xTotal -= int(coordList[bestTourSoFarList[i]][1])
+        yTotal -= int(coordList[bestTourSoFarList[i]][2])
     bestCostSoFar = math.hypot(xTotal, yTotal) # bestCostSoFar is the cost of bestTourSoFar
     print(bestCostSoFar)
+    
 
 g = "mini1.tsp"     # graph g
 BruteForce(g)

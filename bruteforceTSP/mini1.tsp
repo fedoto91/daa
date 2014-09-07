@@ -9,4 +9,4 @@ NODE_COORD_SECTION
 3 5 9
 4 3 5
 5 5 7
-6 7 
+6 7 9
