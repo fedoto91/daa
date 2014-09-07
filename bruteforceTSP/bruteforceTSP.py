@@ -23,21 +23,38 @@ def BruteForce(g):
     permGen = itertools.permutations(cityList)     # permGen is a generator of the permutations of [1 .. n]
     
     
-    for p in permGen:   #
-        print(p)        # p is the first permutation of permGen
+    for p in permGen:   #              # p is the first permutation of permGen
         break           #
 
-    bestTourSoFar = p # bestTourSoFar is the tour corresponding to p
-    bestTourSoFarList = list(bestTourSoFar)
+    bestTourSoFar = list(p) # bestTourSoFar is the tour corresponding to p
     bestCostSoFar = 0
     for i in range(0, n - 1):
-        x2 = int(coordList[bestTourSoFarList[i]][1])
-        y2 = int(coordList[bestTourSoFarList[i]][2])
-        x1 = int(coordList[bestTourSoFarList[i] - 1][1])
-        y1 = int(coordList[bestTourSoFarList[i] - 1][2])
+        x2 = int(coordList[bestTourSoFar[i]][1])
+        y2 = int(coordList[bestTourSoFar[i]][2])
+        x1 = int(coordList[bestTourSoFar[i] - 1][1])
+        y1 = int(coordList[bestTourSoFar[i] - 1][2])
         bestCostSoFar += math.hypot(x2 - x1, y2 - y1)       # bestCostSoFar is the cost of bestTourSoFar
-    print(bestCostSoFar)
-    
+    # Print total cost for first permutation.
+    # print(bestCostSoFar)
+
+    while permGen:    # while (permGen has more permutations)
+        for q in permGen:   # p is the next permutation of permGen
+            if q == p:
+                pass
+            else:
+                t = list(q) # t is the tour corresponding to p
+                tCost = 0
+                for i in range(0, n - 1):
+                    x2 = int(coordList[t[i]][1])
+                    y2 = int(coordList[t[i]][2])
+                    x1 = int(coordList[t[i] - 1][1])
+                    y1 = int(coordList[t[i] - 1][2])
+                    tCost += math.hypot(x2 - x1, y2 - y1)       # bestCostSoFar is the cost of bestTourSoFar
+
+                if (tCost > bestCostSoFar):
+                    bestTourSoFar = t
+                    bestCostSoFar = tCost
+    return bestTourSofar
 
 g = "mini1.tsp"     # graph g
-BruteForce(g)
+print(BruteForce(g))
