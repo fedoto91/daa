@@ -45,20 +45,20 @@ def BruteForce(g):
             t = list(q) # t is the tour corresponding to p
             tCost = 0
             for i in range(0, n - 1):
-                x2 = int(coordList[t[i]][1])
-                y2 = int(coordList[t[i]][2])
+                x2 = int(coordList[t[i] - 1][1])
+                y2 = int(coordList[t[i] - 1][2])
                 x1 = int(coordList[t[i] - 1][1])
                 y1 = int(coordList[t[i] - 1][2])
                 tCost += math.hypot(x2 - x1, y2 - y1)       # bestCostSoFar is the cost of bestTourSoFar
-                if (tCost > bestCostSoFar):
+                if (tCost < bestCostSoFar and tCost != 0):
                     bestTourSoFar = t
                     bestCostSoFar = tCost
-                    print("Best tour:  ")
-                    print(bestTourSoFar)
-                    print("\n")
-                    print("Best cost:  ")
-                    print(bestCostSoFar)
-                    print("\n")
+    print("Best tour:  ")
+    print(bestTourSoFar)
+    print("\n")
+    print("Best cost:  ")
+    print(bestCostSoFar)
+    print("\n")
     return bestTourSoFar
 
 g = "mini1.tsp"     # graph g
